@@ -1,5 +1,6 @@
 package de.jonahd345.xenfororesourcemanagerapi.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class Resource {
     /**
      * The current version of the resource.
      */
+    @SerializedName("current_version")
     private String currentVersion;
 
     /**
@@ -39,16 +41,19 @@ public class Resource {
     /**
      * The native Minecraft version of the resource.
      */
+    @SerializedName("native_minecraft_version")
     private String nativeMinecraftVersion;
 
     /**
      * The list of supported Minecraft versions for the resource.
      */
+    @SerializedName("supported_minecraft_versions")
     private List<String> supportedMinecraftVersions;
 
     /**
      * The link to the icon of the resource.
      */
+    @SerializedName("icon_link")
     private String iconLink;
 
     /**
@@ -69,6 +74,7 @@ public class Resource {
     /**
      * The external download URL of the resource.
      */
+    @SerializedName("external_download_url")
     private String externalDownloadUrl;
 
     /**
