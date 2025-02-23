@@ -27,6 +27,8 @@ public class Author {
 
     /**
      * The social media and communication platform identifiers of the author.
+     * <br>
+     * The identifiers in the {@link Identities} class are optional and may be null.
      */
     private Identities identities;
 
