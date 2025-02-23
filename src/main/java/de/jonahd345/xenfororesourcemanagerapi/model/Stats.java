@@ -26,5 +26,5 @@ public class Stats {
     /**
      * The rating of the resource.
      */
-    private int rating;
+    private double rating;
 }
