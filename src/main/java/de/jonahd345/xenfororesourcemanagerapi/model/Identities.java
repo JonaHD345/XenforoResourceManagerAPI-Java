@@ -5,6 +5,9 @@ import lombok.Data;
 /**
  * Represents the identities of a user in the Xenforo Resource Manager API.
  * This class contains various social media and communication platform identifiers.
+ * Used in the {@link Author} class.
+ * <br>
+ * The identifiers are optional and may be null.
  */
 @Data
 public class Identities {
