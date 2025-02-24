@@ -11,10 +11,10 @@ public class RequestResponse {
     /**
      * The HTTP response code.
      */
-    private int code;
+    private final int code;
 
     /**
      * The response message as a string.
      */
-    private String response;
+    private final String response;
 }
