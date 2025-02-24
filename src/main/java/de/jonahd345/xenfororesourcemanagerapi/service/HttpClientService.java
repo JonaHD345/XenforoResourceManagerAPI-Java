@@ -17,7 +17,7 @@ public class HttpClientService {
      * Makes an HTTP GET request to the specified URL and returns the response as a string.
      *
      * @param url the URL to send the GET request to
-     * @return the response from the GET request as a string
+     * @return the response object {@link RequestResponse} containing the HTTP response code and the response message
      * @throws IOException if an I/O exception occurs
      */
     public RequestResponse makeGetRequest(String url) throws IOException {
