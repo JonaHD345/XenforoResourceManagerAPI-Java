@@ -22,6 +22,6 @@ jobs:
           settings-path: ${{ github.workspace }}
 
       - name: Deploy to GitHub Packages
-        run: mvn deploy -Dusername=${{ github.actor }} -Dpassword=${{ secrets.GITHUB_TOKEN }}
+        run: mvn deploy -Dusername=${{ github.actor }} -Dpassword=${{ secrets.GH_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
