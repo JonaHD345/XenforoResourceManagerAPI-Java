@@ -16,10 +16,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          server-id: github
-          settings-path: ${{ github.workspace }}
 
       - name: Deploy to GitHub Packages
-        run: mvn deploy -Dusername=${{ github.actor }} -Dpassword=${{ secrets.GH_TOKEN }}
+        run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
