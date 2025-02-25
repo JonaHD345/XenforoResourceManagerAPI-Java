@@ -1,4 +1,4 @@
-name: Deploy to GitHub Packages
+name: Build and Deploy to Maven Central sonatype
 
 on:
   workflow_dispatch:
@@ -14,10 +14,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
           java-version: '17'
 
       - name: Deploy to GitHub Packages
-        run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: mvn deploy -Dusername=${{ secrets.ST_USERNAME }} -Dpassword=${{ secrets.ST_PASSWORD }}
