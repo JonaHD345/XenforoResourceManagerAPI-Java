@@ -21,7 +21,6 @@ public class HttpClientService {
      * @throws IOException if an I/O exception occurs
      */
     public RequestResponse makeGetRequest(String url) throws IOException {
-        int httpCode = 0;
         URL urlObject = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
         connection.setRequestMethod("GET");
@@ -41,7 +40,7 @@ public class HttpClientService {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-                return new RequestResponse(httpCode, response.toString());
+                return new RequestResponse(responseCode, response.toString());
             }
         } finally {
             connection.disconnect();
