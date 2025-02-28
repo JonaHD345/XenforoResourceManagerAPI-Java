@@ -3,7 +3,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/de.jonahd345/xenfororesourcemanagerapi)](https://central.sonatype.com/artifact/de.jonahd345/xenfororesourcemanagerapi)
 [![License](https://img.shields.io/github/license/JonaHD345/XenforoResourceManagerAPI-Java)](LICENSE)
 
-Java-client for the XenforoResourceManagerAPI from SpigotMC.org https://github.com/SpigotMC/XenforoResourceManagerAPI <br>
+Java-client for the XenforoResourceManagerAPI from SpigotMC.org https://github.com/SpigotMC/XenforoResourceManagerAPI <br><br>
 Issues and pull requests are welcome!
 
 ## Installation
