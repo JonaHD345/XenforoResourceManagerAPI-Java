@@ -14,6 +14,7 @@ import de.jonahd345.xenfororesourcemanagerapi.util.RequestResponse;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
 /**
@@ -92,12 +93,34 @@ public class XenforoResourceManagerAPI {
     }
 
     /**
+     * Asynchronously retrieves a {@link List} of {@link Resource} with category and pagination.
+     *
+     * @param category the category ID (optional)
+     * @param page the page number (optional)
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if no {@link Resource} is found in this category or page, or if an error occurs
+     */
+    public CompletableFuture<List<Resource>> listResourcesAsync(Integer category, Integer page, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> listResources(category, page), executorService);
+    }
+
+    /**
      * Asynchronously retrieves a {@link List} of {@link Resource} with default pagination.
      *
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if an error occurs
      */
     public CompletableFuture<List<Resource>> listResourcesAsync() {
         return CompletableFuture.supplyAsync(() -> listResources(null, 1));
+    }
+
+    /**
+     * Asynchronously retrieves a {@link List} of {@link Resource} with default pagination.
+     *
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if an error occurs
+     */
+    public CompletableFuture<List<Resource>> listResourcesAsync(ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> listResources(null, 1), executorService);
     }
 
     /**
@@ -108,6 +131,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<List<Resource>> listResourcesAsync(Integer page) {
         return CompletableFuture.supplyAsync(() -> listResources(null, page));
+    }
+
+    /**
+     * Asynchronously retrieves a {@link List} of {@link Resource} with specified pagination.
+     *
+     * @param page the page number
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if no {@link Resource} is found in this page, or if an error occurs
+     */
+    public CompletableFuture<List<Resource>> listResourcesAsync(Integer page, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> listResources(null, page), executorService);
     }
     //endregion
 
@@ -133,6 +167,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<Resource> getResourceAsync(int id) {
         return CompletableFuture.supplyAsync(() -> getResource(id));
+    }
+
+    /**
+     * Asynchronously retrieves detailed information about a specific {@link Resource}.
+     *
+     * @param id the resource ID
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing the {@link Resource}, which can be null if no {@link Resource} is found or if an error occurs
+     */
+    public CompletableFuture<Resource> getResourceAsync(int id, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResource(id), executorService);
     }
     //endregion
 
@@ -178,6 +223,18 @@ public class XenforoResourceManagerAPI {
     }
 
     /**
+     * Asynchronously retrieves a {@link List} of {@link Resource} created by a specific author with pagination.
+     *
+     * @param id the author ID
+     * @param page the page number (optional)
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if the author has no {@link Resource}'s or if an error occurs
+     */
+    public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id, Integer page, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, page), executorService);
+    }
+
+    /**
      * Asynchronously retrieves a {@link List} of {@link Resource} created by a specific author with default pagination.
      *
      * @param id the author ID
@@ -185,6 +242,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id) {
         return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, 1));
+    }
+
+    /**
+     * Asynchronously retrieves a {@link List} of {@link Resource} created by a specific author with default pagination.
+     *
+     * @param id the author ID
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if the author has no {@link Resource}'s or if an error occurs
+     */
+    public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, 1), executorService);
     }
     //endregion
 
@@ -210,6 +278,16 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<List<Category>> listResourceCategoriesAsync() {
         return CompletableFuture.supplyAsync(this::listResourceCategories);
     }
+
+    /**
+     * Asynchronously retrieves a {@link List} of all available resource {@link Category}.
+     *
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Category}, which can be null if an error occurs
+     */
+    public CompletableFuture<List<Category>> listResourceCategoriesAsync(ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(this::listResourceCategories, executorService);
+    }
     //endregion
 
     //region getResourceUpdate
@@ -234,6 +312,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<Update> getResourceUpdateAsync(int id) {
         return CompletableFuture.supplyAsync(() -> getResourceUpdate(id));
+    }
+
+    /**
+     * Asynchronously retrieves details of a specific resource {@link Update}.
+     *
+     * @param id the update ID
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing the {@link Update}, which can be null if no {@link Update} with the {@code id} is found or if an error occurs
+     */
+    public CompletableFuture<Update> getResourceUpdateAsync(int id, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResourceUpdate(id), executorService);
     }
     //endregion
 
@@ -279,6 +368,18 @@ public class XenforoResourceManagerAPI {
     }
 
     /**
+     * Asynchronously retrieves a {@link List} of {@link Update} for a specific resource with pagination.
+     *
+     * @param id the resource ID
+     * @param page the page number (optional)
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Update}, which can be null if no resource with the {@code id} is found or on the page, or if an error occurs
+     */
+    public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id, Integer page, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, page), executorService);
+    }
+
+    /**
      * Asynchronously retrieves a {@link List} of {@link Update} for a specific resource with default pagination.
      *
      * @param id the resource ID
@@ -286,6 +387,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id) {
         return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, 1));
+    }
+
+    /**
+     * Asynchronously retrieves a {@link List} of {@link Update} for a specific resource with default pagination.
+     *
+     * @param id the resource ID
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing a {@link List} of {@link Update}, which can be null if no resource with the {@code id} is found or if an error occurs
+     */
+    public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, 1), executorService);
     }
     //endregion
 
@@ -312,6 +424,17 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<Author> getAuthorAsync(int id) {
         return CompletableFuture.supplyAsync(() -> getAuthor(id));
     }
+
+    /**
+     * Asynchronously retrieves detailed information about a specific {@link Author}.
+     *
+     * @param id the author ID
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing the {@link Author}, which can be null if no {@link Author} with the {@code id} is found or if an error occurs
+     */
+    public CompletableFuture<Author> getAuthorAsync(int id, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> getAuthor(id), executorService);
+    }
     //endregion
 
     //region findAuthor
@@ -336,6 +459,17 @@ public class XenforoResourceManagerAPI {
      */
     public CompletableFuture<Author> findAuthorAsync(String name) {
         return CompletableFuture.supplyAsync(() -> findAuthor(name));
+    }
+
+    /**
+     * Asynchronously searches for an {@link Author} by name.
+     *
+     * @param name the author's name
+     * @param executorService the executor service to run the operation on
+     * @return a CompletableFuture containing the {@link Author}, which can be null if no {@link Author} with the {@code name} is found or if an error occurs
+     */
+    public CompletableFuture<Author> findAuthorAsync(String name, ExecutorService executorService) {
+        return CompletableFuture.supplyAsync(() -> findAuthor(name), executorService);
     }
     //endregion
 
