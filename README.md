@@ -25,7 +25,9 @@ XenforoResourceManagerAPI xenforoResourceManagerAPI = new XenforoResourceManager
 
 // get Resource (with id)
 Resource resource = this.xenforoResourceManagerAPI.getResource(106888);
-List<Update> updatesOfResource = this.xenforoResourceManagerAPI.getResourceUpdates(resource.getId());
+if (resource != null) {
+    List<Update> updatesOfResource = this.xenforoResourceManagerAPI.getResourceUpdates(resource.getId());
+}
 
 // get Author async (in this way available for all endpoints)
 CompletableFuture<Author> futureAuthor = api.getAuthorAsync(1407849);
