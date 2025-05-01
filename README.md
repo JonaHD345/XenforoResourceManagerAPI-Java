@@ -21,12 +21,12 @@ To use this project in your Maven-based project, add the following dependency:
 ## Usage
 
 ```java
-XenforoResourceManagerAPI xenforoResourceManagerAPI = new XenforoResourceManagerAPI();
+XenforoResourceManagerAPI api = new XenforoResourceManagerAPI();
 
 // get Resource (with id)
-Resource resource = this.xenforoResourceManagerAPI.getResource(106888);
+Resource resource = api.getResource(106888);
 if (resource != null) {
-    List<Update> updatesOfResource = this.xenforoResourceManagerAPI.getResourceUpdates(resource.getId());
+    List<Update> updatesOfResource = api.getResourceUpdates(resource.getId());
 }
 
 // get Author async (in this way available for all endpoints)
