@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Logger;
 
 /**
@@ -39,7 +40,6 @@ public class XenforoResourceManagerAPI {
         this.gson = new Gson();
     }
 
-    //region listResources
     /**
      * Retrieves a {@link List} of {@link Resource} in a category and on a pagination.
      *
@@ -89,7 +89,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if no {@link Resource} is found in this category or page, or if an error occurs
      */
     public CompletableFuture<List<Resource>> listResourcesAsync(Integer category, Integer page) {
-        return CompletableFuture.supplyAsync(() -> listResources(category, page));
+        return listResourcesAsync(category, page, ForkJoinPool.commonPool());
     }
 
     /**
@@ -110,7 +110,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if an error occurs
      */
     public CompletableFuture<List<Resource>> listResourcesAsync() {
-        return CompletableFuture.supplyAsync(() -> listResources(null, 1));
+        return listResourcesAsync(ForkJoinPool.commonPool());
     }
 
     /**
@@ -130,7 +130,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if no {@link Resource} is found in this page, or if an error occurs
      */
     public CompletableFuture<List<Resource>> listResourcesAsync(Integer page) {
-        return CompletableFuture.supplyAsync(() -> listResources(null, page));
+        return listResourcesAsync(page, ForkJoinPool.commonPool());
     }
 
     /**
@@ -143,9 +143,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<List<Resource>> listResourcesAsync(Integer page, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> listResources(null, page), executorService);
     }
-    //endregion
 
-    //region getResource
     /**
      * Retrieves detailed information about a specific {@link Resource}.
      *
@@ -166,7 +164,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing the {@link Resource}, which can be null if no {@link Resource} is found or if an error occurs
      */
     public CompletableFuture<Resource> getResourceAsync(int id) {
-        return CompletableFuture.supplyAsync(() -> getResource(id));
+        return getResourceAsync(id, ForkJoinPool.commonPool());
     }
 
     /**
@@ -179,9 +177,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<Resource> getResourceAsync(int id, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> getResource(id), executorService);
     }
-    //endregion
 
-    //region getResourcesByAuthor
     /**
      * Retrieves a {@link List} of {@link Resource} created by a specific author with pagination.
      *
@@ -219,7 +215,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if the author has no {@link Resource}'s or if an error occurs
      */
     public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id, Integer page) {
-        return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, page));
+        return getResourcesByAuthorAsync(id, page, ForkJoinPool.commonPool());
     }
 
     /**
@@ -241,7 +237,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Resource}, which can be null if the author has no {@link Resource}'s or if an error occurs
      */
     public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id) {
-        return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, 1));
+        return getResourcesByAuthorAsync(id, ForkJoinPool.commonPool());
     }
 
     /**
@@ -254,9 +250,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<List<Resource>> getResourcesByAuthorAsync(int id, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> getResourcesByAuthor(id, 1), executorService);
     }
-    //endregion
 
-    //region listResourceCategories
     /**
      * Retrieves a {@link List} of all available resource {@link Category}.
      *
@@ -276,7 +270,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Category}, which can be null if an error occurs
      */
     public CompletableFuture<List<Category>> listResourceCategoriesAsync() {
-        return CompletableFuture.supplyAsync(this::listResourceCategories);
+        return listResourceCategoriesAsync(ForkJoinPool.commonPool());
     }
 
     /**
@@ -288,9 +282,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<List<Category>> listResourceCategoriesAsync(ExecutorService executorService) {
         return CompletableFuture.supplyAsync(this::listResourceCategories, executorService);
     }
-    //endregion
 
-    //region getResourceUpdate
     /**
      * Retrieves details of a specific resource {@link Update}.
      *
@@ -311,7 +303,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing the {@link Update}, which can be null if no {@link Update} with the {@code id} is found or if an error occurs
      */
     public CompletableFuture<Update> getResourceUpdateAsync(int id) {
-        return CompletableFuture.supplyAsync(() -> getResourceUpdate(id));
+        return getResourceUpdateAsync(id, ForkJoinPool.commonPool());
     }
 
     /**
@@ -324,9 +316,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<Update> getResourceUpdateAsync(int id, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> getResourceUpdate(id), executorService);
     }
-    //endregion
 
-    //region getResourceUpdates
     /**
      * Retrieves a {@link List} of {@link Update} for a specific resource with pagination.
      *
@@ -364,7 +354,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Update}, which can be null if no resource with the {@code id} is found or on the page, or if an error occurs
      */
     public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id, Integer page) {
-        return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, page));
+        return getResourceUpdatesAsync(id, page, ForkJoinPool.commonPool());
     }
 
     /**
@@ -386,7 +376,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing a {@link List} of {@link Update}, which can be null if no resource with the {@code id} is found or if an error occurs
      */
     public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id) {
-        return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, 1));
+        return getResourceUpdatesAsync(id, ForkJoinPool.commonPool());
     }
 
     /**
@@ -399,9 +389,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<List<Update>> getResourceUpdatesAsync(int id, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> getResourceUpdates(id, 1), executorService);
     }
-    //endregion
 
-    //region getAuthor
     /**
      * Retrieves detailed information about a specific {@link Author}.
      *
@@ -422,7 +410,7 @@ public class XenforoResourceManagerAPI {
      * @return a CompletableFuture containing the {@link Author}, which can be null if no {@link Author} with the {@code id} is found or if an error occurs
      */
     public CompletableFuture<Author> getAuthorAsync(int id) {
-        return CompletableFuture.supplyAsync(() -> getAuthor(id));
+        return getAuthorAsync(id, ForkJoinPool.commonPool());
     }
 
     /**
@@ -435,9 +423,7 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<Author> getAuthorAsync(int id, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> getAuthor(id), executorService);
     }
-    //endregion
 
-    //region findAuthor
     /**
      * Searches for an {@link Author} by name.
      *
@@ -471,7 +457,6 @@ public class XenforoResourceManagerAPI {
     public CompletableFuture<Author> findAuthorAsync(String name, ExecutorService executorService) {
         return CompletableFuture.supplyAsync(() -> findAuthor(name), executorService);
     }
-    //endregion
 
     /**
      * Fetches data from the specified URL and parses it into the specified type.
